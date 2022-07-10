@@ -15,16 +15,11 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="SampleClass.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="SampleClass.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
