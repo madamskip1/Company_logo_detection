@@ -155,10 +155,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\ColorConverter.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\SampleClass.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\ColorConverter.h" />
     <ClInclude Include="include\SampleClass.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
