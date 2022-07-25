@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Blob.cpp" />
     <ClCompile Include="src\MorphologyOperations.cpp" />
     <ClCompile Include="src\ColorThresholding.cpp" />
     <ClCompile Include="src\ColorConverter.cpp" />
@@ -166,6 +167,7 @@
     <ClCompile Include="src\SampleClass.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Blob.h" />
     <ClInclude Include="include\ColorThresholding.h" />
     <ClInclude Include="include\ColorConverter.h" />
     <ClInclude Include="include\SampleClass.h" />
