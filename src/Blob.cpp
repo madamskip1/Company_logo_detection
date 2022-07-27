@@ -12,6 +12,16 @@ void Blob::draw(cv::Mat& inMat)
 	cv::rectangle(inMat, rect, cv::Scalar(255, 0, 0));
 }
 
+std::pair<cv::Point2i, cv::Point2i> Blob::getCorners()
+{
+	return std::make_pair(topLeftCorner, bottomRightCorner);
+}
+
+std::size_t Blob::countPoints()
+{
+	return points.size();
+}
+
 void Blob::checkIfBoundaryChanged(int x, int y)
 {
 	if (x < topLeftCorner.x)
