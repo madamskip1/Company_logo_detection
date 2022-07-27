@@ -1,5 +1,33 @@
 #include "BlobsDetection.h"
 
+#include <queue>
+
+static void addPixelNeighborsToCheck(const cv::Point2i pixel, std::queue<cv::Point2i>& pixelsToCheck, cv::Mat& inMat)
+{
+    int rows = inMat.rows;
+    int columns = inMat.cols;
+
+    for (int y = pixel.y - 1; y <= pixel.y + 1; ++y)
+    {
+        if (y >= 0 && y < rows)
+        {
+            auto inMatRow = inMat.ptr<uchar>(y);
+
+            for (int x = pixel.x - 1; x <= pixel.x + 1; ++x)
+            {
+                if (x >= 0 && x < columns)
+                {
+                    if (inMatRow[x] == 255)
+                    {
+                        inMatRow[x] = 0;
+                        pixelsToCheck.emplace(cv::Point2i(x, y));
+                    }
+                }
+            }
+        }
+    }
+}
+
 std::vector<Blob> detectBlobs(cv::Mat inMat)
 {
     CV_Assert(inMat.channels() == 1);
@@ -39,29 +67,4 @@ std::vector<Blob> detectBlobs(cv::Mat inMat)
     return blobs;
 }
 
-inline void addPixelNeighborsToCheck(const cv::Point2i pixel, std::queue<cv::Point2i>& pixelsToCheck, cv::Mat& inMat)
-{
-    int rows = inMat.rows;
-    int columns = inMat.cols;
-
-    for (int y = pixel.y - 1; y <= pixel.y + 1; ++y)
-    {
-        if (y >= 0 && y < rows)
-        {
-            auto inMatRow = inMat.ptr<uchar>(y);
-
-            for (int x = pixel.x - 1; x <= pixel.x + 1; ++x)
-            {
-                if (x >= 0 && x < columns)
-                {
-                    if (inMatRow[x] == 255)
-                    {
-                        inMatRow[x] = 0;
-                        pixelsToCheck.emplace(cv::Point2i(x, y));
-                    }
-                }
-            }
-        }
-    }
-}
 
