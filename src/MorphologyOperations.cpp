@@ -1,21 +1,11 @@
 #include "MorphologyOperations.h"
 #include <algorithm>
 
-cv::Mat MorphologyOperations::erode(const cv::Mat& inMat, const int size)
-{
-    return morph(inMat, size, 0);
-}
-
-cv::Mat MorphologyOperations::dilate(const cv::Mat& inMat, const int size)
-{
-    return morph(inMat, size, 255);
-}
-
-cv::Mat MorphologyOperations::morph(const cv::Mat& inMat, const int size, const int kernelValue)
+static cv::Mat morph(const cv::Mat& inMat, const int size, const int kernelValue)
 {
     CV_Assert(inMat.channels() == 1);
     CV_Assert(size % 2 != 0);
-    
+
     int rows = inMat.rows;
     int columns = inMat.cols;
     int kernelCenter = size / 2;
@@ -57,3 +47,14 @@ cv::Mat MorphologyOperations::morph(const cv::Mat& inMat, const int size, const 
 
     return outMat;
 }
+
+cv::Mat erode(const cv::Mat& inMat, const int size)
+{
+    return morph(inMat, size, 0);
+}
+
+cv::Mat dilate(const cv::Mat& inMat, const int size)
+{
+    return morph(inMat, size, 255);
+}
+

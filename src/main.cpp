@@ -17,11 +17,8 @@ int main()
     auto HSVMat = convertBGRToHSV(img);
     auto thresholdedMoje = colorThresholding.threshold(img, { {10, 50}, {100, 150}, {100, 255} });
     cv::imshow("moje", thresholdedMoje);
-
-    MorphologyOperations morph;
-  
-
-    auto morphed = morph.dilate(thresholdedMoje, 3);
+ 
+    auto morphed = dilate(thresholdedMoje, 3);
 
 
     cv::imshow("morph", morphed);
