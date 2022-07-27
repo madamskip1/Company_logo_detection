@@ -13,21 +13,20 @@ int main()
     cv::namedWindow("Display Image", cv::WINDOW_AUTOSIZE);
     cv::imshow("test", img);
 
-    ColorConverter colorConverter;
     ColorThresholding colorThresholding;
-    auto HSVMat = colorConverter.convertBGRToHSV(img);
+    auto HSVMat = convertBGRToHSV(img);
     auto thresholdedMoje = colorThresholding.threshold(img, { {10, 50}, {100, 150}, {100, 255} });
     cv::imshow("moje", thresholdedMoje);
 
     MorphologyOperations morph;
   
 
-    auto dupa = morph.dilate(thresholdedMoje, 3);
+    auto morphed = morph.dilate(thresholdedMoje, 3);
 
 
-    cv::imshow("dupa", dupa);
+    cv::imshow("morph", morphed);
 
-    auto blobs = detectBlobs(dupa);
+    auto blobs = detectBlobs(morphed);
 
     for (auto& blob : blobs)
     {
