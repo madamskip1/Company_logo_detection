@@ -165,14 +165,12 @@
     <ClCompile Include="src\ColorThresholding.cpp" />
     <ClCompile Include="src\ColorConverter.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\SampleClass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Blob.h" />
     <ClInclude Include="include\BlobsDetection.h" />
     <ClInclude Include="include\ColorThresholding.h" />
     <ClInclude Include="include\ColorConverter.h" />
-    <ClInclude Include="include\SampleClass.h" />
     <ClInclude Include="include\MorphologyOperations.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
