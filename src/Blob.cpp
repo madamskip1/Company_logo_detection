@@ -6,10 +6,10 @@ void Blob::addPoint(const cv::Point2i& point)
 	points.emplace_back(point);
 }
 
-void Blob::addPoint(const cv::Point2i&& point)
+void Blob::draw(cv::Mat& inMat)
 {
-	checkIfBoundaryChanged(point.x, point.y);
-	points.emplace_back(std::move(point));
+	auto rect = cv::Rect(topLeftCorner, bottomRightCorner);
+	cv::rectangle(inMat, rect, cv::Scalar(255, 0, 0));
 }
 
 void Blob::checkIfBoundaryChanged(int x, int y)
