@@ -8,20 +8,25 @@ namespace POBR
 		points.emplace_back(point);
 	}
 
-	void Blob::draw(cv::Mat& inMat)
+	void Blob::draw(cv::Mat& inMat) const
 	{
 		auto rect = cv::Rect(topLeftCorner, bottomRightCorner);
 		cv::rectangle(inMat, rect, cv::Scalar(255, 0, 0));
 	}
 
-	std::pair<cv::Point2i, cv::Point2i> Blob::getCorners()
+	std::pair<cv::Point2i, cv::Point2i> Blob::getCorners() const
 	{
 		return std::make_pair(topLeftCorner, bottomRightCorner);
 	}
 
-	std::size_t Blob::countPoints()
+	std::size_t Blob::countPoints() const
 	{
 		return points.size();
+	}
+
+	const std::vector<cv::Point2i>& Blob::getPoints() const
+	{
+		return points;
 	}
 
 	void Blob::checkIfBoundaryChanged(int x, int y)
