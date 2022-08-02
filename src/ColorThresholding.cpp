@@ -1,9 +1,19 @@
 #include "ColorThresholding.h"
 
-cv::Mat ColorThresholding::threshold(cv::Mat& inMat, const std::vector<ColorRange>& colorRanges)
+static bool checkIfColorInRange(uchar color, const ColorRange& colorRange)
+{
+    if (color < colorRange.min || color > colorRange.max)
+    {
+        return false;
+    }
+
+    return true;
+}
+
+cv::Mat thresholdByHSV(cv::Mat& inMat, const std::vector<ColorRange>& colorRanges)
 {
     assert(inMat.channels() == colorRanges.size());
-    
+
     int rows = inMat.rows;
     int columns = inMat.cols;
     int channels = inMat.channels();
@@ -44,14 +54,4 @@ cv::Mat ColorThresholding::threshold(cv::Mat& inMat, const std::vector<ColorRang
     }
 
     return thresholdedMat;
-}
-
-bool ColorThresholding::checkIfColorInRange(uchar color, const ColorRange& colorRange)
-{
-    if (color < colorRange.min || color > colorRange.max)
-    {
-        return false;
-    }
-
-    return true;
 }

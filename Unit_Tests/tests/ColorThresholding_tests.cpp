@@ -7,14 +7,12 @@ namespace ColorThresholdingTests
 {
 	TEST_CASE("BGR color thresholding", "[BGRThresholding]")
 	{
-		ColorThresholding colorThresholding;
-
 		SECTION("Single channel")
 		{
 			ColorRange colorRange(20, 50);
 			uchar arr[2][2][1] = { {10, 30}, {20, 50} };
 			auto mat = cv::Mat(2, 2, CV_8UC1, &arr);
-			auto newMat = colorThresholding.threshold(mat, { colorRange });
+			auto newMat = thresholdByHSV(mat, { colorRange });
 			auto newMatData = newMat.data;
 
 			CHECK(newMatData[0] == 0);
@@ -28,7 +26,7 @@ namespace ColorThresholdingTests
 			std::vector<ColorRange> colorRanges = { ColorRange(10, 20), ColorRange(30, 40), ColorRange(50, 60) };
 			uchar arr[2][2][3] = { { {10, 30, 50}, {5, 5, 5} }, { {5, 30, 50}, {5, 5, 50} } };
 			auto mat = cv::Mat(2, 2, CV_8UC3, &arr);
-			auto newMat = colorThresholding.threshold(mat, colorRanges);
+			auto newMat = thresholdByHSV(mat, colorRanges);
 			auto newMatData = newMat.data;
 
 			CHECK(newMatData[0] == 255);

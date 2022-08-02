@@ -13,9 +13,8 @@ int main()
     cv::namedWindow("Display Image", cv::WINDOW_AUTOSIZE);
     cv::imshow("test", img);
 
-    ColorThresholding colorThresholding;
     auto HSVMat = convertBGRToHSV(img);
-    auto thresholdedMoje = colorThresholding.threshold(img, { {10, 50}, {100, 150}, {100, 255} });
+    auto thresholdedMoje = thresholdByHSV(img, { {10, 50}, {100, 150}, {100, 255} });
     cv::imshow("moje", thresholdedMoje);
  
     auto morphed = dilate(thresholdedMoje, 3);
