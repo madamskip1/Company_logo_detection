@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\RawMoments.cpp" />
     <ClCompile Include="src\Blob.cpp" />
     <ClCompile Include="src\BlobsDetection.cpp" />
     <ClCompile Include="src\MorphologyOperations.cpp" />
@@ -167,6 +168,7 @@
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\RawMoments.h" />
     <ClInclude Include="include\Blob.h" />
     <ClInclude Include="include\BlobsDetection.h" />
     <ClInclude Include="include\ColorThresholding.h" />
