@@ -1,43 +1,46 @@
 #include "Blob.h"
 
-void Blob::addPoint(const cv::Point2i& point)
+namespace POBR
 {
-	checkIfBoundaryChanged(point.x, point.y);
-	points.emplace_back(point);
-}
-
-void Blob::draw(cv::Mat& inMat)
-{
-	auto rect = cv::Rect(topLeftCorner, bottomRightCorner);
-	cv::rectangle(inMat, rect, cv::Scalar(255, 0, 0));
-}
-
-std::pair<cv::Point2i, cv::Point2i> Blob::getCorners()
-{
-	return std::make_pair(topLeftCorner, bottomRightCorner);
-}
-
-std::size_t Blob::countPoints()
-{
-	return points.size();
-}
-
-void Blob::checkIfBoundaryChanged(int x, int y)
-{
-	if (x < topLeftCorner.x)
+	void Blob::addPoint(const cv::Point2i& point)
 	{
-		topLeftCorner.x = x;
+		checkIfBoundaryChanged(point.x, point.y);
+		points.emplace_back(point);
 	}
-	if (y < topLeftCorner.y)
+
+	void Blob::draw(cv::Mat& inMat)
 	{
-		topLeftCorner.y = y;
+		auto rect = cv::Rect(topLeftCorner, bottomRightCorner);
+		cv::rectangle(inMat, rect, cv::Scalar(255, 0, 0));
 	}
-	if (x > bottomRightCorner.x)
+
+	std::pair<cv::Point2i, cv::Point2i> Blob::getCorners()
 	{
-		bottomRightCorner.x = x;
+		return std::make_pair(topLeftCorner, bottomRightCorner);
 	}
-	if (y > bottomRightCorner.y)
+
+	std::size_t Blob::countPoints()
 	{
-		bottomRightCorner.y = y;
+		return points.size();
+	}
+
+	void Blob::checkIfBoundaryChanged(int x, int y)
+	{
+		if (x < topLeftCorner.x)
+		{
+			topLeftCorner.x = x;
+		}
+		if (y < topLeftCorner.y)
+		{
+			topLeftCorner.y = y;
+		}
+		if (x > bottomRightCorner.x)
+		{
+			bottomRightCorner.x = x;
+		}
+		if (y > bottomRightCorner.y)
+		{
+			bottomRightCorner.y = y;
+		}
 	}
 }

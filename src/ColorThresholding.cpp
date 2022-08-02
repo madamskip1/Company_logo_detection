@@ -1,57 +1,60 @@
 #include "ColorThresholding.h"
 
-static bool checkIfColorInRange(uchar color, const ColorRange& colorRange)
+namespace POBR
 {
-    if (color < colorRange.min || color > colorRange.max)
+    static bool checkIfColorInRange(uchar color, const ColorRange& colorRange)
     {
-        return false;
+        if (color < colorRange.min || color > colorRange.max)
+        {
+            return false;
+        }
+
+        return true;
     }
 
-    return true;
-}
-
-cv::Mat thresholdByHSV(cv::Mat& inMat, const std::vector<ColorRange>& colorRanges)
-{
-    assert(inMat.channels() == colorRanges.size());
-
-    int rows = inMat.rows;
-    int columns = inMat.cols;
-    int channels = inMat.channels();
-
-    cv::Mat thresholdedMat = cv::Mat1b::zeros(rows, columns);
-
-    for (int y = 0; y < rows; y++)
+    cv::Mat thresholdByHSV(cv::Mat& inMat, const std::vector<ColorRange>& colorRanges)
     {
-        uchar* inMatRow = inMat.ptr<uchar>(y);
-        uchar* thresholdedMatRow = thresholdedMat.ptr<uchar>(y);
+        assert(inMat.channels() == colorRanges.size());
 
-        for (int x = 0; x < columns; ++x)
+        int rows = inMat.rows;
+        int columns = inMat.cols;
+        int channels = inMat.channels();
+
+        cv::Mat thresholdedMat = cv::Mat1b::zeros(rows, columns);
+
+        for (int y = 0; y < rows; y++)
         {
-            int inMatX = x * channels;
-            bool inRange = true;
+            uchar* inMatRow = inMat.ptr<uchar>(y);
+            uchar* thresholdedMatRow = thresholdedMat.ptr<uchar>(y);
 
-            for (int channel = 0; channel < channels; ++channel)
+            for (int x = 0; x < columns; ++x)
             {
-                int index = inMatX + channel;
-                const ColorRange& colorRange = colorRanges[channel];
+                int inMatX = x * channels;
+                bool inRange = true;
 
-                if (!checkIfColorInRange(inMatRow[index], colorRange))
+                for (int channel = 0; channel < channels; ++channel)
                 {
-                    inRange = false;
-                    break;
+                    int index = inMatX + channel;
+                    const ColorRange& colorRange = colorRanges[channel];
+
+                    if (!checkIfColorInRange(inMatRow[index], colorRange))
+                    {
+                        inRange = false;
+                        break;
+                    }
+                }
+
+                if (inRange)
+                {
+                    thresholdedMatRow[x] = 255;
+                }
+                else
+                {
+                    thresholdedMatRow[x] = 0;
                 }
             }
-
-            if (inRange)
-            {
-                thresholdedMatRow[x] = 255;
-            }
-            else
-            {
-                thresholdedMatRow[x] = 0;
-            }
         }
-    }
 
-    return thresholdedMat;
+        return thresholdedMat;
+    }
 }

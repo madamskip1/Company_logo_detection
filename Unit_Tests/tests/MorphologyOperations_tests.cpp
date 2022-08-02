@@ -15,7 +15,7 @@ namespace MorphologyOperationsTests
 			{0, 0, 255, 255, 255}
 		};
 		auto mat = cv::Mat(5, 5, CV_8UC1, &arr);
-		auto newMat = erode(mat, 3);
+		auto newMat = POBR::erode(mat, 3);
 		auto newMatData = newMat.data;
 
 		CHECK(newMatData[0] == 0);
@@ -60,7 +60,7 @@ namespace MorphologyOperationsTests
 			{0, 0, 255, 255, 255}
 		};
 		auto mat = cv::Mat(5, 5, CV_8UC1, &arr);
-		auto newMat = dilate(mat, 3);
+		auto newMat = POBR::dilate(mat, 3);
 		auto newMatData = newMat.data;
 
 		CHECK(newMatData[0] == 0);

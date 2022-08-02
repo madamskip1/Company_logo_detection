@@ -13,16 +13,16 @@ int main()
     cv::namedWindow("Display Image", cv::WINDOW_AUTOSIZE);
     cv::imshow("test", img);
 
-    auto HSVMat = convertBGRToHSV(img);
-    auto thresholdedMoje = thresholdByHSV(img, { {10, 50}, {100, 150}, {100, 255} });
+    auto HSVMat = POBR::convertBGRToHSV(img);
+    auto thresholdedMoje = POBR::thresholdByHSV(img, { {10, 50}, {100, 150}, {100, 255} });
     cv::imshow("moje", thresholdedMoje);
  
-    auto morphed = dilate(thresholdedMoje, 3);
+    auto morphed = POBR::dilate(thresholdedMoje, 3);
 
 
     cv::imshow("morph", morphed);
 
-    auto blobs = detectBlobs(morphed);
+    auto blobs = POBR::detectBlobs(morphed);
 
     for (auto& blob : blobs)
     {

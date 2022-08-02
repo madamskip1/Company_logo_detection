@@ -12,7 +12,7 @@ namespace BlobsDetectionTests
 		{
 			uchar arr[1][1][1] = { { 0 } };
 			auto mat = cv::Mat(1, 1, CV_8UC1, &arr);
-			auto blobs = detectBlobs(mat);
+			auto blobs = POBR::detectBlobs(mat);
 
 			REQUIRE(blobs.size() == 0);
 		}
@@ -21,7 +21,7 @@ namespace BlobsDetectionTests
 		{
 			uchar arr[1][1][1] = { { 255 } };
 			auto mat = cv::Mat(1, 1, CV_8UC1, &arr);
-			auto blobs = detectBlobs(mat);
+			auto blobs = POBR::detectBlobs(mat);
 
 			REQUIRE(blobs.size() == 1);
 			auto blob = blobs[0];
@@ -38,7 +38,7 @@ namespace BlobsDetectionTests
 		{
 			uchar arr[3][3][1] = { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
 			auto mat = cv::Mat(3, 3, CV_8UC1, &arr);
-			auto blobs = detectBlobs(mat);
+			auto blobs = POBR::detectBlobs(mat);
 
 			REQUIRE(blobs.size() == 0);
 		}
@@ -47,7 +47,7 @@ namespace BlobsDetectionTests
 		{
 			uchar arr[3][3][1] = { { 255, 255, 255 }, { 255, 255, 255 }, { 255, 255, 255 } };
 			auto mat = cv::Mat(3, 3, CV_8UC1, &arr);
-			auto blobs = detectBlobs(mat);
+			auto blobs = POBR::detectBlobs(mat);
 
 			REQUIRE(blobs.size() == 1);
 			auto blob = blobs[0];
@@ -61,7 +61,7 @@ namespace BlobsDetectionTests
 		{
 			uchar arr[3][3][1] = { { 255, 255, 0 }, { 255, 0, 0 }, { 0, 0, 255 } };
 			auto mat = cv::Mat(3, 3, CV_8UC1, &arr);
-			auto blobs = detectBlobs(mat);
+			auto blobs = POBR::detectBlobs(mat);
 
 			REQUIRE(blobs.size() == 2);
 			auto blob1 = blobs[0];
@@ -81,7 +81,7 @@ namespace BlobsDetectionTests
 		{
 			uchar arr[3][3][1] = { { 255, 0, 0 }, { 0, 255, 0 }, { 0, 0, 0 } };
 			auto mat = cv::Mat(3, 3, CV_8UC1, &arr);
-			auto blobs = detectBlobs(mat);
+			auto blobs = POBR::detectBlobs(mat);
 
 			REQUIRE(blobs.size() == 1);
 			auto blob = blobs[0];

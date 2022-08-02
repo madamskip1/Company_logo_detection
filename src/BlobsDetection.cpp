@@ -2,69 +2,70 @@
 
 #include <queue>
 
-static void addPixelNeighborsToCheck(const cv::Point2i pixel, std::queue<cv::Point2i>& pixelsToCheck, cv::Mat& inMat)
+namespace POBR
 {
-    int rows = inMat.rows;
-    int columns = inMat.cols;
-
-    for (int y = pixel.y - 1; y <= pixel.y + 1; ++y)
+    static void addPixelNeighborsToCheck(const cv::Point2i pixel, std::queue<cv::Point2i>& pixelsToCheck, cv::Mat& inMat)
     {
-        if (y >= 0 && y < rows)
-        {
-            auto inMatRow = inMat.ptr<uchar>(y);
+        int rows = inMat.rows;
+        int columns = inMat.cols;
 
-            for (int x = pixel.x - 1; x <= pixel.x + 1; ++x)
+        for (int y = pixel.y - 1; y <= pixel.y + 1; ++y)
+        {
+            if (y >= 0 && y < rows)
             {
-                if (x >= 0 && x < columns)
+                auto inMatRow = inMat.ptr<uchar>(y);
+
+                for (int x = pixel.x - 1; x <= pixel.x + 1; ++x)
                 {
-                    if (inMatRow[x] == 255)
+                    if (x >= 0 && x < columns)
                     {
-                        inMatRow[x] = 0;
-                        pixelsToCheck.emplace(cv::Point2i(x, y));
+                        if (inMatRow[x] == 255)
+                        {
+                            inMatRow[x] = 0;
+                            pixelsToCheck.emplace(cv::Point2i(x, y));
+                        }
                     }
                 }
             }
         }
     }
-}
 
-std::vector<Blob> detectBlobs(cv::Mat inMat)
-{
-    CV_Assert(inMat.channels() == 1);
-
-    std::vector<Blob> blobs;
-    std::queue<cv::Point2i> pixelsToCheck;
-
-    int rows = inMat.rows;
-    int columns = inMat.cols;
-
-    for (int y = 0; y < rows; y++)
+    std::vector<Blob> detectBlobs(cv::Mat inMat)
     {
-        auto inMatRow = inMat.ptr<uchar>(y);
+        CV_Assert(inMat.channels() == 1);
 
-        for (int x = 0; x < columns; ++x)
+        std::vector<Blob> blobs;
+        std::queue<cv::Point2i> pixelsToCheck;
+
+        int rows = inMat.rows;
+        int columns = inMat.cols;
+
+        for (int y = 0; y < rows; y++)
         {
-            if (inMatRow[x] == 255)
+            auto inMatRow = inMat.ptr<uchar>(y);
+
+            for (int x = 0; x < columns; ++x)
             {
-                Blob blob;
-                pixelsToCheck.emplace(cv::Point2i(x, y));
-                inMatRow[x] = 0;
-
-                while (!pixelsToCheck.empty())
+                if (inMatRow[x] == 255)
                 {
-                    auto pixel = pixelsToCheck.front();
-                    pixelsToCheck.pop();
-                    blob.addPoint(pixel);
+                    Blob blob;
+                    pixelsToCheck.emplace(cv::Point2i(x, y));
+                    inMatRow[x] = 0;
 
-                    addPixelNeighborsToCheck(pixel, pixelsToCheck, inMat);
+                    while (!pixelsToCheck.empty())
+                    {
+                        auto pixel = pixelsToCheck.front();
+                        pixelsToCheck.pop();
+                        blob.addPoint(pixel);
+
+                        addPixelNeighborsToCheck(pixel, pixelsToCheck, inMat);
+                    }
+
+                    blobs.emplace_back(blob);
                 }
-
-                blobs.emplace_back(blob);
             }
         }
+
+        return blobs;
     }
-
-    return blobs;
 }
-
-

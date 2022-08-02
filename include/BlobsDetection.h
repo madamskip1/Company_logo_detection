@@ -3,4 +3,7 @@
 #include <vector>
 #include "Blob.h"
 
-std::vector<Blob> detectBlobs(cv::Mat inMat);
+namespace POBR
+{
+	std::vector<Blob> detectBlobs(cv::Mat inMat);
+}

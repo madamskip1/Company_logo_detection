@@ -2,13 +2,16 @@
 #include <vector>
 #include <opencv2/opencv.hpp>
 
-struct ColorRange
+namespace POBR
 {
-	uchar min;
-	uchar max;
+	struct ColorRange
+	{
+		uchar min;
+		uchar max;
 
-	ColorRange(uchar min, uchar max) : min{ min }, max{ max } {};
-	ColorRange(int min, int max) : min{ (uchar)min }, max{ (uchar)max } {};
-};
+		ColorRange(uchar min, uchar max) : min{ min }, max{ max } {};
+		ColorRange(int min, int max) : min{ (uchar)min }, max{ (uchar)max } {};
+	};
 
-cv::Mat thresholdByHSV(cv::Mat& inMat, const std::vector<ColorRange>& colorRanges);
+	cv::Mat thresholdByHSV(cv::Mat& inMat, const std::vector<ColorRange>& colorRanges);
+}

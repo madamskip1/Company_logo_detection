@@ -11,7 +11,7 @@ namespace ColorConverterTests
 		{
 			uchar arr[1][1][3] = { { {122, 122, 122} } };
 			auto mat = cv::Mat(1, 1, CV_8UC3, &arr);
-			auto newMat = convertBGRToHSV(mat);
+			auto newMat = POBR::convertBGRToHSV(mat);
 			auto newMatData = newMat.data;
 
 			REQUIRE(newMatData[0] == 0);
@@ -21,7 +21,7 @@ namespace ColorConverterTests
 		{
 			uchar arr[1][1][3] = { { {255, 100, 200} } };
 			auto mat = cv::Mat(1, 1, CV_8UC3, &arr);
-			auto newMat = convertBGRToHSV(mat);
+			auto newMat = POBR::convertBGRToHSV(mat);
 			auto newMatData = newMat.data;
 
 			REQUIRE(newMatData[0] == 139);
@@ -31,7 +31,7 @@ namespace ColorConverterTests
 		{
 			uchar arr[1][1][3] = { { {100, 255, 200} } };
 			auto mat = cv::Mat(1, 1, CV_8UC3, &arr);
-			auto newMat = convertBGRToHSV(mat);
+			auto newMat = POBR::convertBGRToHSV(mat);
 			auto newMatData = newMat.data;
 
 			REQUIRE(newMatData[0] == 40);
@@ -41,7 +41,7 @@ namespace ColorConverterTests
 		{
 			uchar arr[1][1][3] = { { {100, 200, 255} } };
 			auto mat = cv::Mat(1, 1, CV_8UC3, &arr);
-			auto newMat = convertBGRToHSV(mat);
+			auto newMat = POBR::convertBGRToHSV(mat);
 			auto newMatData = newMat.data;
 
 			REQUIRE(newMatData[0] == 19);
@@ -51,7 +51,7 @@ namespace ColorConverterTests
 		{
 			uchar arr[1][1][3] = { { {200, 100, 255} } };
 			auto mat = cv::Mat(1, 1, CV_8UC3, &arr);
-			auto newMat = convertBGRToHSV(mat);
+			auto newMat = POBR::convertBGRToHSV(mat);
 			auto newMatData = newMat.data;
 
 			REQUIRE(newMatData[0] == 160);
@@ -64,7 +64,7 @@ namespace ColorConverterTests
 		{
 			uchar arr[1][1][3] = { { {0, 0, 0} } };
 			auto mat = cv::Mat(1, 1, CV_8UC3, &arr);
-			auto newMat = convertBGRToHSV(mat);
+			auto newMat = POBR::convertBGRToHSV(mat);
 			auto newMatData = newMat.data;
 
 			REQUIRE(newMatData[1] == 0);
@@ -74,7 +74,7 @@ namespace ColorConverterTests
 		{
 			uchar arr[1][1][3] = { { {100, 255, 0} } };
 			auto mat = cv::Mat(1, 1, CV_8UC3, &arr);
-			auto newMat = convertBGRToHSV(mat);
+			auto newMat = POBR::convertBGRToHSV(mat);
 			auto newMatData = newMat.data;
 
 			REQUIRE(newMatData[1] == 255);
@@ -84,7 +84,7 @@ namespace ColorConverterTests
 		{
 			uchar arr[1][1][3] = { { {255, 255, 255} } };
 			auto mat = cv::Mat(1, 1, CV_8UC3, &arr);
-			auto newMat = convertBGRToHSV(mat);
+			auto newMat = POBR::convertBGRToHSV(mat);
 			auto newMatData = newMat.data;
 
 			REQUIRE(newMatData[1] == 0);
@@ -94,7 +94,7 @@ namespace ColorConverterTests
 		{
 			uchar arr[1][1][3] = { { {100, 200, 150} } };
 			auto mat = cv::Mat(1, 1, CV_8UC3, &arr);
-			auto newMat = convertBGRToHSV(mat);
+			auto newMat = POBR::convertBGRToHSV(mat);
 			auto newMatData = newMat.data;
 
 			REQUIRE(newMatData[1] == 127);
@@ -107,7 +107,7 @@ namespace ColorConverterTests
 		{
 			uchar arr[1][1][3] = { { {0, 0, 0} } };
 			auto mat = cv::Mat(1, 1, CV_8UC3, &arr);
-			auto newMat = convertBGRToHSV(mat);
+			auto newMat = POBR::convertBGRToHSV(mat);
 			auto newMatData = newMat.data;
 
 			REQUIRE(newMatData[2] == 0);
@@ -117,7 +117,7 @@ namespace ColorConverterTests
 		{
 			uchar arr[1][1][3] = { { {100, 255, 0} } };
 			auto mat = cv::Mat(1, 1, CV_8UC3, &arr);
-			auto newMat = convertBGRToHSV(mat);
+			auto newMat = POBR::convertBGRToHSV(mat);
 			auto newMatData = newMat.data;
 
 			REQUIRE(newMatData[2] == 255);
@@ -127,7 +127,7 @@ namespace ColorConverterTests
 		{
 			uchar arr[1][1][3] = { { {100, 200, 0} } };
 			auto mat = cv::Mat(1, 1, CV_8UC3, &arr);
-			auto newMat = convertBGRToHSV(mat);
+			auto newMat = POBR::convertBGRToHSV(mat);
 			auto newMatData = newMat.data;
 
 			REQUIRE(newMatData[2] == 200);
@@ -140,7 +140,7 @@ namespace ColorConverterTests
 		{
 			uchar arr[1][1][3] = { { {10, 70, 190} } };
 			auto mat = cv::Mat(1, 1, CV_8UC3, &arr);
-			auto newMat = convertBGRToHSV(mat);
+			auto newMat = POBR::convertBGRToHSV(mat);
 			auto newMatData = newMat.data;
 
 			REQUIRE(newMatData[0] == 10);
@@ -156,7 +156,7 @@ namespace ColorConverterTests
 				{ {190, 70, 10}, {70, 110, 210} }
 			};
 			auto mat = cv::Mat(2, 2, CV_8UC3, &arr);
-			auto newMat = convertBGRToHSV(mat);
+			auto newMat = POBR::convertBGRToHSV(mat);
 			auto newMatData = newMat.data;
 
 			REQUIRE(newMatData[0] == 111);
