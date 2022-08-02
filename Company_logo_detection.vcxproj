@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\CentralMoments.cpp" />
     <ClCompile Include="src\RawMoments.cpp" />
     <ClCompile Include="src\Blob.cpp" />
     <ClCompile Include="src\BlobsDetection.cpp" />
@@ -168,6 +169,7 @@
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\CentralMoments.h" />
     <ClInclude Include="include\RawMoments.h" />
     <ClInclude Include="include\Blob.h" />
     <ClInclude Include="include\BlobsDetection.h" />
