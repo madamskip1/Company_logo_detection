@@ -170,6 +170,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\CentralMoments.h" />
+    <ClInclude Include="include\Moment.h" />
     <ClInclude Include="include\RawMoments.h" />
     <ClInclude Include="include\Blob.h" />
     <ClInclude Include="include\BlobsDetection.h" />
