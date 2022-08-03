@@ -1,7 +1,7 @@
 #pragma once
 #include "RawMoments.h"
-
 #include "Moment.h"
+#include "Blob.h"
 
 namespace POBR
 {
@@ -24,4 +24,5 @@ namespace POBR
 	};
 
 	CentralMoments calcNormalizedCentralMoments(const RawMoments& rawMoments);
+	CentralMoments calcNormalizedCentralMoments(const Blob& blob);
 }

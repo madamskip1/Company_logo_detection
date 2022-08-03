@@ -51,4 +51,9 @@ namespace POBR
 		auto huMoments = HuMoments{ hu_1, hu_2, hu_3, hu_4, hu_5, hu_6, hu_7, hu_8, hu_9, hu_10 };
 		return huMoments;
 	}
+	HuMoments HuMoments::calcHuMoments(const Blob& blob)
+	{
+		auto normalizedCentralMoments = calcNormalizedCentralMoments(blob);
+		return calcHuMoments(normalizedCentralMoments);;
+	}
 }
