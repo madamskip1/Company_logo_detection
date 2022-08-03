@@ -24,6 +24,12 @@ namespace POBR
 		return points.size();
 	}
 
+	bool Blob::isInHuMomentsRange(const HuMoments& minHuMoments, const HuMoments& maxHuMoments) const
+	{
+		auto huMoments = HuMoments::calcHuMoments(*this);
+		return huMoments.isInRange(minHuMoments, maxHuMoments);
+	}
+
 	const std::vector<cv::Point2i>& Blob::getPoints() const
 	{
 		return points;
