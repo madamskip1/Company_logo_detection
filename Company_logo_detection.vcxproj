@@ -160,6 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\CentralMoments.cpp" />
+    <ClCompile Include="src\HuMoments.cpp" />
     <ClCompile Include="src\RawMoments.cpp" />
     <ClCompile Include="src\Blob.cpp" />
     <ClCompile Include="src\BlobsDetection.cpp" />
@@ -170,6 +171,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\CentralMoments.h" />
+    <ClInclude Include="include\HuMoments.h" />
     <ClInclude Include="include\Moment.h" />
     <ClInclude Include="include\RawMoments.h" />
     <ClInclude Include="include\Blob.h" />
