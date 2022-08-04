@@ -4,10 +4,12 @@
 #include <cstddef>
 #include <opencv2/opencv.hpp>
 
-#include "HuMoments.h"
+
 
 namespace POBR
 {
+	class HuMoments;
+
 	class Blob
 	{
 	public:

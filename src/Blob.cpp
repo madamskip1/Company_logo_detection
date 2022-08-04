@@ -1,5 +1,7 @@
 #include "Blob.h"
 
+#include "HuMoments.h"
+
 namespace POBR
 {
 	void Blob::addPoint(const cv::Point2i& point)
