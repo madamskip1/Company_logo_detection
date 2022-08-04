@@ -30,5 +30,8 @@
     <ClCompile Include="tests\BlobsDetection_tests.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="tests\RawMoments_test.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
