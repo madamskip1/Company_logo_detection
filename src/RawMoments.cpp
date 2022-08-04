@@ -4,6 +4,11 @@ namespace POBR
 {
 	static double calcRawMoment(const Blob& blob, const int p, const int q)
 	{
+		if (p == 0 && q == 0)
+		{
+			return blob.countPoints();
+		}
+
 		auto moment{ 0.0 };
 		auto& points = blob.getPoints();
 		for (const auto& point : points)
