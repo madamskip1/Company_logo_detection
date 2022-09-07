@@ -38,17 +38,19 @@ namespace POBR
 	CentralMoments calcNormalizedCentralMoments(const RawMoments& rawMoments)
 	{
 		auto centroid = calcCentroid(rawMoments);
+		auto centroidXSquared = std::pow(centroid.x, 2.0);
+		auto centroidYSquared = std::pow(centroid.y, 2.0);
 
 		double M_00_val = rawMoments.m_00;
-		double M_01_val = rawMoments.m_01 - (rawMoments.m_01 / rawMoments.m_00) * rawMoments.m_00;
-		double M_10_val = rawMoments.m_10 - (rawMoments.m_10 / rawMoments.m_00) * rawMoments.m_00;
-		double M_11_val = rawMoments.m_11 - rawMoments.m_10 * rawMoments.m_01 / rawMoments.m_00;
-		double M_20_val = rawMoments.m_20 - std::pow(rawMoments.m_10, 2.0) / rawMoments.m_00;
-		double M_02_val = rawMoments.m_02 - std::pow(rawMoments.m_01, 2.0) / rawMoments.m_00;
-		double M_21_val = rawMoments.m_21 - 2.0 * rawMoments.m_11 * centroid.x - rawMoments.m_20 * centroid.y + 2.0 * rawMoments.m_01 * std::pow(centroid.x, 2.0);
-		double M_12_val = rawMoments.m_12 - 2.0 * rawMoments.m_11 * centroid.y - rawMoments.m_02 * centroid.x + 2.0 * rawMoments.m_10 * std::pow(centroid.y, 2.0);
-		double M_30_val = rawMoments.m_30 - 3.0 * rawMoments.m_20 * centroid.x + 2.0 * rawMoments.m_10 * std::pow(centroid.x, 2.0);
-		double M_03_val = rawMoments.m_03 - 3.0 * rawMoments.m_02 * centroid.y + 2.0 * rawMoments.m_01 * std::pow(centroid.y, 2.0);
+		double M_01_val = rawMoments.m_01 - centroid.y * rawMoments.m_00;
+		double M_10_val = rawMoments.m_10 - centroid.x * rawMoments.m_00;
+		double M_11_val = rawMoments.m_11 - centroid.x * rawMoments.m_01;		
+		double M_20_val = rawMoments.m_20 - centroid.x * rawMoments.m_10;
+		double M_02_val = rawMoments.m_02 - centroid.y * rawMoments.m_01;
+		double M_21_val = rawMoments.m_21 - 2.0 * rawMoments.m_11 * centroid.x - rawMoments.m_20 * centroid.y + 2.0 * rawMoments.m_01 * centroidXSquared;
+		double M_12_val = rawMoments.m_12 - 2.0 * rawMoments.m_11 * centroid.y - rawMoments.m_02 * centroid.x + 2.0 * rawMoments.m_10 * centroidYSquared;
+		double M_30_val = rawMoments.m_30 - 3.0 * rawMoments.m_20 * centroid.x + 2.0 * rawMoments.m_10 * centroidXSquared;
+		double M_03_val = rawMoments.m_03 - 3.0 * rawMoments.m_02 * centroid.y + 2.0 * rawMoments.m_01 * centroidYSquared;
 		
 		auto M_00 = Moment{ M_00_val, 0, 0 };
 		auto M_01 = Moment{ M_01_val, 0, 1 };
