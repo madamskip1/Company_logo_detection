@@ -157,6 +157,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="tests\BlobsDetection_tests.cpp" />
+    <ClCompile Include="tests\CentralMoments_tests.cpp" />
     <ClCompile Include="tests\ColorConverter_tests.cpp" />
     <ClCompile Include="tests\ColorThresholding_tests.cpp" />
     <ClCompile Include="tests\MorphologyOperations_tests.cpp" />
