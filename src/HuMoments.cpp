@@ -30,6 +30,19 @@ namespace POBR
 		return huValues[index];
 	}
 
+	void HuMoments::print() const
+	{
+		for (int i = 0; i < huValues.size(); ++i)
+		{
+			std::cout << "HU " << i << ": " << huValues[i] << std::endl;
+		}
+	}
+
+	std::vector<double> HuMoments::getHuValues() const
+	{
+		return huValues;
+	}
+
 	HuMoments HuMoments::calcHuMoments(const CentralMoments& normalizedCentralMoments)
 	{
 		auto& nCM = normalizedCentralMoments;
