@@ -20,6 +20,9 @@ namespace POBR
 		bool isInRange(const HuMoments& min, const HuMoments& max) const;
 		double operator[](int index) const;
 
+		void print() const;
+		std::vector<double> getHuValues() const;
+
 	private:
 		std::vector<double> huValues;
 	};
