@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 
-void calcMumentsRange(std::string imageName);
+void calcMomentsRange(std::string imageName);
 
 std::vector<double> calcMedians(std::vector<std::vector<double>>& hu_values);
 std::vector<double> calcSTDs(std::vector<std::vector<double>>& hu_values, std::vector<double>& avgMomentsValue);

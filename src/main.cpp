@@ -10,7 +10,7 @@
 
 int main()
 {
-    calcMumentsRange("img/moments_logo/niebieskie_1.jpg");
+    calcMomentsRange("img/moments_logo/niebieskie_1.jpg");
     //cv::Mat img = cv::imread("img/test.jpg"/*, cv::IMREAD_COLOR*/);
     //cv::namedWindow("Display Image", cv::WINDOW_AUTOSIZE);
     //cv::imshow("test", img);
