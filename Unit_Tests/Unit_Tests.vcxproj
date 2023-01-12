@@ -132,7 +132,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ColorConverter.obj;ColorThresholding.obj;MorphologyOperations.obj;Blob.obj;BlobsDetection.obj;RawMoments.obj;CentralMoments.obj;HuMoments.obj;opencv_world460d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ColorConverter.obj;ColorThresholding.obj;MorphologyOperations.obj;Blob.obj;BlobsDetection.obj;RawMoments.obj;CentralMoments.obj;HuMoments.obj;FilterImage.obj;opencv_world460d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -160,6 +160,7 @@
     <ClCompile Include="tests\CentralMoments_tests.cpp" />
     <ClCompile Include="tests\ColorConverter_tests.cpp" />
     <ClCompile Include="tests\ColorThresholding_tests.cpp" />
+    <ClCompile Include="tests\FilterImage_tests.cpp" />
     <ClCompile Include="tests\MorphologyOperations_tests.cpp" />
     <ClCompile Include="tests\RawMoments_test.cpp" />
   </ItemGroup>

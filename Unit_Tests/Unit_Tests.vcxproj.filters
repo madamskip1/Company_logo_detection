@@ -36,5 +36,8 @@
     <ClCompile Include="tests\CentralMoments_tests.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="tests\FilterImage_tests.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
