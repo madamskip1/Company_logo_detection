@@ -160,7 +160,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\CentralMoments.cpp" />
+    <ClCompile Include="src\FilterImage.cpp" />
     <ClCompile Include="src\HuMoments.cpp" />
+    <ClCompile Include="src\MathUtilties.cpp" />
     <ClCompile Include="src\MomentsCalculator.cpp" />
     <ClCompile Include="src\RawMoments.cpp" />
     <ClCompile Include="src\Blob.cpp" />
@@ -172,7 +174,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\CentralMoments.h" />
+    <ClInclude Include="include\FilterImage.h" />
+    <ClInclude Include="include\FilterMasks.h" />
     <ClInclude Include="include\HuMoments.h" />
+    <ClInclude Include="include\MathUtilties.h" />
     <ClInclude Include="include\Moment.h" />
     <ClInclude Include="include\MomentsCalculator.h" />
     <ClInclude Include="include\RawMoments.h" />
