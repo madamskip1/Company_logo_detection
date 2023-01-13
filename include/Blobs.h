@@ -2,6 +2,7 @@
 #include <vector>
 #include <opencv2/core/mat.hpp>
 #include "Blob.h"
+#include "HuMoments.h"
 
 namespace POBR
 {
@@ -9,7 +10,8 @@ namespace POBR
 	{
 	public:
 		void addBlob(const Blob& blob);
-		void filterBlobsBySize(const std::size_t size);
+		void filterBlobsBySize(const std::size_t& size);
+		void filterBlobsByHuMoments(const POBR::HuMoments& huMin, const POBR::HuMoments& huMax);
 
 		void draw(cv::Mat& mat) const;
 		const std::vector<POBR::Blob>& getBlobs() const;
