@@ -165,7 +165,9 @@
     <ClCompile Include="src\FilterImage.cpp" />
     <ClCompile Include="src\HuMoments.cpp" />
     <ClCompile Include="src\MathUtilties.cpp" />
+    <ClCompile Include="src\mergeBlobs.cpp" />
     <ClCompile Include="src\MomentsCalculator.cpp" />
+    <ClCompile Include="src\PrepareBlueBlobs.cpp" />
     <ClCompile Include="src\PrepareRedBlobs.cpp" />
     <ClCompile Include="src\RawMoments.cpp" />
     <ClCompile Include="src\Blob.cpp" />
@@ -183,8 +185,10 @@
     <ClInclude Include="include\FilterMasks.h" />
     <ClInclude Include="include\HuMoments.h" />
     <ClInclude Include="include\MathUtilties.h" />
+    <ClInclude Include="include\mergeBlobs.h" />
     <ClInclude Include="include\Moment.h" />
     <ClInclude Include="include\MomentsCalculator.h" />
+    <ClInclude Include="include\PrepareBlueBlobs.h" />
     <ClInclude Include="include\PrepareRedBlobs.h" />
     <ClInclude Include="include\RawMoments.h" />
     <ClInclude Include="include\Blob.h" />

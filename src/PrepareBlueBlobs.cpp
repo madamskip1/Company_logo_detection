@@ -1,4 +1,4 @@
-#include "PrepareRedBlobs.h"
+#include "PrepareBlueBlobs.h"
 #include "ColorThresholding.h"
 #include "MorphologyOperations.h"
 #include "BlobsDetection.h"
@@ -8,40 +8,40 @@
 
 namespace POBR
 {
-	cv::Mat thresholdRed(cv::Mat& hsvMat);
-	cv::Mat morphOpenRed(cv::Mat& binaryMat);
-	void filterRedBlobs(POBR::Blobs& blobs);
+	cv::Mat thresholdBlue(cv::Mat& hsvMat);
+	cv::Mat morphOpenBlue(cv::Mat& binaryMat);
+	void filterBlueBlobs(POBR::Blobs& blobs);
 
-	POBR::Blobs prepareRedBlobs(cv::Mat& hsvMat)
+	POBR::Blobs prepareBlueBlobs(cv::Mat& hsvMat)
 	{
-		auto thresholdedMat = thresholdRed(hsvMat);
-		auto morphedOpenMat = morphOpenRed(thresholdedMat);
+		auto thresholdedMat = thresholdBlue(hsvMat);
+		auto morphedOpenMat = morphOpenBlue(thresholdedMat);
 		cv::Mat resizedImg;
 		cv::resize(morphedOpenMat, resizedImg, cv::Size{ 800, 600 });
 		cv::imshow("MorphedProc", resizedImg);
 
 		auto blobs = POBR::detectBlobs(morphedOpenMat);
-		filterRedBlobs(blobs);
+		filterBlueBlobs(blobs);
+
 		auto toDraw = hsvMat.clone();
 		blobs.draw(toDraw);
-
-		cv::imwrite("test_red.jpg", toDraw);
+		cv::imwrite("test_blue.jpg", toDraw);
 
 		return blobs;
 	}
 
-	cv::Mat thresholdRed(cv::Mat& hsvMat)
+	cv::Mat thresholdBlue(cv::Mat& hsvMat)
 	{
-		auto hRange = POBR::ColorRange{ 165, 10 };
-		auto sRange = POBR::ColorRange{ 70, 255 };
-		auto vRange = POBR::ColorRange{ 70, 255 };
+		auto hRange = POBR::ColorRange{ 95, 130 };
+		auto sRange = POBR::ColorRange{ 50, 255 };
+		auto vRange = POBR::ColorRange{ 50, 255 };
 
 		auto thresholdedMat = POBR::thresholdByHSV(hsvMat, { hRange, sRange, vRange });
 
 		return thresholdedMat;
 	}
 
-	cv::Mat morphOpenRed(cv::Mat& binaryMat)
+	cv::Mat morphOpenBlue(cv::Mat& binaryMat)
 	{
 		auto erodeSize{ 3 };
 		auto dilateSize{ 3 };
@@ -52,7 +52,7 @@ namespace POBR
 		return morphedMat;
 	}
 
-	void filterRedBlobs(POBR::Blobs& blobs)
+	void filterBlueBlobs(POBR::Blobs& blobs)
 	{
 		auto sizeThreshold = 100;
 		blobs.filterBlobsBySize(sizeThreshold);

@@ -3,5 +3,5 @@
 
 namespace POBR
 {
-	POBR::Blobs prepareRedBlobs(cv::Mat& hsvMat);
+	POBR::Blobs prepareBlueBlobs(cv::Mat& hsvMat);
 }
