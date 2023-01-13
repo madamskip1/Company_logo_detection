@@ -30,11 +30,11 @@ namespace POBR
         }
     }
 
-    std::vector<Blob> detectBlobs(cv::Mat inMat)
+    POBR::Blobs detectBlobs(cv::Mat inMat)
     {
         CV_Assert(inMat.channels() == 1);
+        auto blobs = POBR::Blobs{};
 
-        std::vector<Blob> blobs;
         std::queue<cv::Point2i> pixelsToCheck;
 
         int rows = inMat.rows;
@@ -61,7 +61,7 @@ namespace POBR
                         addPixelNeighborsToCheck(pixel, pixelsToCheck, inMat);
                     }
 
-                    blobs.emplace_back(blob);
+                    blobs.addBlob(blob);
                 }
             }
         }

@@ -15,11 +15,10 @@ void calcMomentsRange(std::string imageName)
 	auto img = cv::imread(imageName, cv::IMREAD_GRAYSCALE);
 	auto morphed = POBR::dilate(img, 1);
 	auto blobs = POBR::detectBlobs(morphed);
-	
-	for (auto& blob : blobs)
-	{
-		blob.draw(img);
-	}
+	auto blobsVector = blobs.getBlobs();
+
+	blobs.draw(img);
+
 	cv::Mat resizedImg;
 
 	cv::resize(img, resizedImg, cv::Size{ 1920, 1080 });
@@ -28,9 +27,9 @@ void calcMomentsRange(std::string imageName)
 	auto hu_values = std::vector<std::vector<double>>(10, std::vector<double>{});
 	auto momentsCounter = std::size_t{ 0 };
 
-	std::for_each(hu_values.begin(), hu_values.end(), [&blobs](auto& v) { v.reserve(blobs.size()); });
+	std::for_each(hu_values.begin(), hu_values.end(), [&blobsVector](auto& v) { v.reserve(blobsVector.size()); });
 
-	for (const auto& blob : blobs)
+	for (const auto& blob : blobsVector)
 	{
 		++momentsCounter;
 		auto huMoments = POBR::HuMoments::calcHuMoments(blob);
