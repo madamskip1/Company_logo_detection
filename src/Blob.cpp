@@ -32,6 +32,21 @@ namespace POBR
 		return huMoments.isInRange(minHuMoments, maxHuMoments);
 	}
 
+	POBR::Blob Blob::createBlobFromFew(const std::vector<Blob>& blobs)
+	{
+		auto newBlob = POBR::Blob{};
+
+		for (const auto& blob : blobs)
+		{
+			auto points = blob.getPoints();
+			for (const auto& point : points)
+			{
+				newBlob.addPoint(point);
+			}
+		}
+		return newBlob;
+	}
+
 	const std::vector<cv::Point2i>& Blob::getPoints() const
 	{
 		return points;

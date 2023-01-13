@@ -4,8 +4,6 @@
 #include <cstddef>
 #include <opencv2/opencv.hpp>
 
-
-
 namespace POBR
 {
 	class HuMoments;
@@ -20,6 +18,7 @@ namespace POBR
 		std::size_t countPoints() const;
 		bool isInHuMomentsRange(const HuMoments& minHuMoments, const HuMoments& maxHuMoments) const;
 
+		static POBR::Blob createBlobFromFew(const std::vector<Blob>& blobs);
 	private:
 		cv::Point2i topLeftCorner{ INT_MAX, INT_MAX };
 		cv::Point2i bottomRightCorner{ 0, 0 };
