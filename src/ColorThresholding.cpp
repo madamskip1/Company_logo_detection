@@ -4,6 +4,15 @@ namespace POBR
 {
     static bool checkIfColorInRange(uchar color, const ColorRange& colorRange)
     {
+        if (colorRange.min > colorRange.max)
+        {
+            if (color > colorRange.max && color < colorRange.min)
+            {
+                return false;
+            }
+            return true;
+        }
+
         if (color < colorRange.min || color > colorRange.max)
         {
             return false;
