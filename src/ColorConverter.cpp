@@ -51,7 +51,7 @@ namespace POBR
     cv::Mat convertBGRToHSV(const cv::Mat& inMat)
     {
         CV_Assert(inMat.channels() == 3);
-
+        std::cout << "--POBR::BGR to HSV --- start" << std::endl;
         int rows = inMat.rows;
         int columns = inMat.cols * inMat.channels();
 
@@ -79,7 +79,7 @@ namespace POBR
                 row[x + 2] = (uchar)value;
             }
         }
-
+        std::cout << "--POBR::BGR to HSV --- end" << std::endl;
         return HSVMat;
     }
 }

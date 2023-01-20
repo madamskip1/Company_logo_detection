@@ -6,23 +6,32 @@ void POBR::Blobs::addBlob(const Blob& blob)
 	blobs.push_back(blob);
 }
 
-void POBR::Blobs::filterBlobsBySize(const std::size_t& size)
+void POBR::Blobs::filterBySize(const std::size_t& minSize, const std::size_t& maxSize)
 {
-	blobs.erase(std::remove_if(blobs.begin(), blobs.end(), [&size](const POBR::Blob& blob) {
-			return (blob.countPoints() < size);
+	blobs.erase(std::remove_if(blobs.begin(), blobs.end(), [&minSize, &maxSize](const POBR::Blob& blob) {
+			auto isInRange = blob.isInSizeRange(minSize, maxSize);
+			auto blobSize{ blob.countPoints() };
+			return !isInRange;
 		}), blobs.end());
 }
 
-void POBR::Blobs::filterBlobsByHuMoments(const POBR::HuMoments& huMin, const POBR::HuMoments& huMax)
+void POBR::Blobs::filterByHuMoments(const POBR::HuMoments& huMin, const POBR::HuMoments& huMax)
 {
-	std::cout << blobs.size() << std::endl;
 	blobs.erase(std::remove_if(blobs.begin(), blobs.end(), [&huMin, &huMax](const POBR::Blob& blob) {
-			auto x =  blob.isInHuMomentsRange(huMin, huMax);
-			std::cout << x << std::endl;
-			return !x;
+			auto isInRange =  blob.isInHuMomentsRange(huMin, huMax);
+			return !isInRange;
 		}), blobs.end());
-	std::cout << blobs.size() << std::endl;
 }
+
+void POBR::Blobs::filterByEdgeRatio(const double minRatio, const double maxRatio)
+{
+	blobs.erase(std::remove_if(blobs.begin(), blobs.end(), [&minRatio, &maxRatio](const POBR::Blob& blob) {
+		auto isInRange = blob.isInEdgeRatio(minRatio, maxRatio);
+		return !isInRange;
+		}), blobs.end());
+}
+
+
 
 void POBR::Blobs::draw(cv::Mat& mat) const
 {

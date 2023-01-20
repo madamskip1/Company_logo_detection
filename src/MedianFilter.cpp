@@ -1,22 +1,21 @@
-#include "FilterImage.h"
-#include <algorithm>
+#include "MedianFilter.h"
+
 #include <iostream>
+#include <algorithm>
 
 namespace POBR
 {
-	cv::Mat filterImage(const cv::Mat& inMat, const cv::Mat& kernel)
+	cv::Mat filterMedian(const cv::Mat& inMat, const int kernelSize)
 	{
-		CV_Assert(kernel.rows == kernel.cols);
-		CV_Assert(kernel.rows % 2 != 0);
-		std::cout << "--POBR::Filter image --- start" << std::endl;
-
+		CV_Assert(kernelSize % 2 != 0);
+		std::cout << "--POBR::Median Filter --- start" << std::endl;
 
 		auto imgRows{ inMat.rows };
 		auto imgCols{ inMat.cols };
 		auto imgChannels{ inMat.channels() };
-		auto kernelSize{ kernel.rows };
 		auto anchorX{ static_cast<int>(kernelSize / 2) };
 		auto anchorY{ static_cast<int>(kernelSize / 2) };
+		auto windowPoints = kernelSize * kernelSize;
 
 		auto outputMat = inMat.clone();
 
@@ -26,38 +25,43 @@ namespace POBR
 
 			for (auto x = anchorX; x < (imgCols - anchorX); ++x)
 			{
-				auto newValues = std::vector<float>(inMat.channels(), 0.0);
+				auto newValues = std::vector<uchar>(windowPoints * imgChannels);
+
 				auto outputMatCol = x * imgChannels;
+				auto valueIndex{ 0 };
 
 				for (auto ky = 0; ky < kernelSize; ++ky)
 				{
 					auto inMatY{ y + ky - anchorY };
 					auto* inMatRow = inMat.ptr<uchar>(inMatY);
 
-					auto kernelRow = kernel.ptr<float>(ky);
-
 					for (auto kx = 0; kx < kernelSize; ++kx)
 					{
 						auto inMatX{ x + kx - anchorX };
 						inMatX *= imgChannels;
-						float kernelValue = kernelRow[kx];
 
 						for (auto c = 0; c < imgChannels; ++c)
 						{
-							newValues[c] += inMatRow[inMatX + c] * kernelValue;
+							auto index = windowPoints * c + valueIndex;
+							newValues[index] = inMatRow[inMatX + c];
 						}
+
+						valueIndex++;
 					}
 				}
 
 				for (auto c = 0; c < imgChannels; ++c)
 				{
-					newValues[c] = std::clamp(newValues[c], 0.0f, 255.0f);
-					outputMatRow[outputMatCol + c] = newValues[c];
+					auto startElement = newValues.begin() + (windowPoints * c);
+					auto endElement = startElement + windowPoints;
+					std::sort(startElement, endElement);
+					auto medianPoint = startElement + (windowPoints / 2);
+					auto midValue = *medianPoint;
+					outputMatRow[outputMatCol + c] = midValue;
 				}
-
 			}
 		}
-		std::cout << "--POBR::Filter image --- end" << std::endl;
+		std::cout << "--POBR::Median Filter --- end" << std::endl;
 		return outputMat;
 	}
 }

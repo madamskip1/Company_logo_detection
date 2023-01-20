@@ -13,12 +13,26 @@ namespace POBR
 	void Blob::draw(cv::Mat& inMat) const
 	{
 		auto rect = cv::Rect(topLeftCorner, bottomRightCorner);
-		cv::rectangle(inMat, rect, cv::Scalar(255, 0, 0));
+		if (inMat.channels() == 3)
+		{
+			cv::rectangle(inMat, rect, cv::Scalar(0, 255, 255), 5);
+		}
+		else if (inMat.channels() == 1)
+		{
+			cv::rectangle(inMat, rect, cv::Scalar(120), 5);
+		}
 	}
 
 	std::pair<cv::Point2i, cv::Point2i> Blob::getCorners() const
 	{
 		return std::make_pair(topLeftCorner, bottomRightCorner);
+	}
+
+	cv::Point2i Blob::getCenter() const
+	{
+		auto centerX = (topLeftCorner.x + bottomRightCorner.x) / 2;
+		auto centerY = (topLeftCorner.y + bottomRightCorner.y) / 2;
+		return cv::Point2i{ centerX, centerY };
 	}
 
 	std::size_t Blob::countPoints() const
@@ -30,6 +44,25 @@ namespace POBR
 	{
 		auto huMoments = HuMoments::calcHuMoments(*this);
 		return huMoments.isInRange(minHuMoments, maxHuMoments);
+	}
+
+	bool Blob::isInSizeRange(const std::size_t& min, const std::size_t& max) const
+	{
+		auto pointsCount = points.size();
+		return pointsCount >= min && pointsCount <= max;
+	}
+
+	bool Blob::isInEdgeRatio(const double min, const double max) const
+	{
+		auto lenghtA = bottomRightCorner.x - topLeftCorner.x;
+		auto lenghtB = bottomRightCorner.y - topLeftCorner.y;
+
+		auto ratio = static_cast<double>(lenghtA) / static_cast<double>(lenghtB);
+		if (ratio >= 1)
+		{
+			ratio = 1.0 / ratio;
+		}
+		return ratio >= min && ratio <= max;
 	}
 
 	POBR::Blob Blob::createBlobFromFew(const std::vector<Blob>& blobs)

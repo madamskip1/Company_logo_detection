@@ -1,66 +1,41 @@
 #include <opencv2/opencv.hpp>
-#include <iostream>
 
 #include "ColorConverter.h"
-#include "ColorThresholding.h"
-#include "MorphologyOperations.h"
-#include "BlobsDetection.h"
-#include "HuMoments.h"
+#include "Blobs.h"
 #include "MomentsCalculator.h"
+#include "FilterImage.h"
+#include "FilterMasks.h"
+#include "MedianFilter.h"
+#include "PrepareRedBlobs.h"
+#include "PrepareBlueBlobs.h"
+#include "mergeBlobs.h"
 
 int main()
 {
-    calcMomentsRange("img/moments_logo/niebieskie_1.jpg");
-    //cv::Mat img = cv::imread("img/test.jpg"/*, cv::IMREAD_COLOR*/);
-    //cv::namedWindow("Display Image", cv::WINDOW_AUTOSIZE);
-    //cv::imshow("test", img);
+    auto imagesNames = { "all_in_one", "all_in_one_90", "all_in_one_180", "all_in_one_mirror" };
 
-    //auto HSVMat = POBR::convertBGRToHSV(img);
-    //auto thresholdedMoje = POBR::thresholdByHSV(img, { {10, 50}, {100, 150}, {100, 255} });
-    //cv::imshow("moje", thresholdedMoje);
+    for (const auto& imageName : imagesNames)
+    {
+        std::cout << "POBR::" + std::string(imageName) + "--- start" << std::endl;
 
-    //auto morphed = POBR::dilate(thresholdedMoje, 3);
+        auto filePath = "img/pepsi_logo/" + std::string(imageName) + ".jpg";
+        cv::Mat img = cv::imread(filePath/*, cv::IMREAD_COLOR*/);
 
+        auto medianImg = POBR::filterMedian(img, 3);
+        auto sharpenMask = POBR::getSharpenMask();
+        auto sharpenImg = POBR::filterImage(medianImg, sharpenMask);
+        auto HSVMat = POBR::convertBGRToHSV(sharpenImg);
+        auto blueBlobs = POBR::prepareBlueBlobs(HSVMat);
+        auto redBlobs = POBR::prepareRedBlobs(HSVMat);
+        auto mergedBlobs = POBR::mergeBlobs(redBlobs, blueBlobs);
+        mergedBlobs.draw(img);
 
-    //cv::imshow("morph", morphed);
+        auto saveFilePath = "img/results/final_detections/" + std::string(imageName) + ".jpg";
+        cv::imwrite(saveFilePath, img);
 
-    //auto blobs = POBR::detectBlobs(morphed);
-
-    //for (auto& blob : blobs)
-    //{
-    //    blob.draw(img);
-    //}
-    //cv::imshow("test2", img);
-
-
-    //uchar arr[9][7][1] = {
-    //        {0,0,0,0,0,0,0},
-    //        {0,255,0,0,0,255,0},
-    //        {0,255,0,0,255,0,0},
-    //        {0,255,0,255,0,0,0},
-    //        {0,255,255,0,0,0,0},
-    //        {0,255,0,255,0,0,0},
-    //        {0,255,0,0,255,0,0},
-    //        {0,255,0,0,0,255,0},
-    //        {0,0,0,0,0,0,0},
-    //};
-    //auto mat = cv::Mat(9, 7, CV_8UC1, &arr);
-    //blobs = POBR::detectBlobs(mat);
-    //auto blob = blobs[0];
-    //auto huMoments = POBR::HuMoments::calcHuMoments(blob);
-    //huMoments.print();
-
-    //img = cv::imread("img/diamond.png", cv::IMREAD_COLOR);
-    //cv::imshow("test", img);
-    //auto imgHSV = POBR::convertBGRToHSV(img);
-    //auto thresholdedDiamond = POBR::thresholdByHSV(img, { {100, 255}, {0, 255}, {0, 255} });
-    //cv::imshow("DUPA", thresholdedDiamond);
-    //cv::waitKey(0);
-    //blobs = POBR::detectBlobs(thresholdedDiamond);
-    //blob = blobs[0];
-    //huMoments = POBR::HuMoments::calcHuMoments(blob);
-    //huMoments.print();
-
+        std::cout << "POBR::" + std::string(imageName) + "--- end" << std::endl;
+        std::cout << "_____________________" << std::endl;
+    }
 
     cv::waitKey(0);
     return 0;

@@ -15,8 +15,12 @@ namespace POBR
 		void draw(cv::Mat& inMat) const;
 		const std::vector<cv::Point2i>& getPoints() const;
 		std::pair<cv::Point2i, cv::Point2i> getCorners() const;
+		cv::Point2i getCenter() const;
 		std::size_t countPoints() const;
+
 		bool isInHuMomentsRange(const HuMoments& minHuMoments, const HuMoments& maxHuMoments) const;
+		bool isInSizeRange(const std::size_t& min, const std::size_t& max) const;
+		bool isInEdgeRatio(const double min, const double max) const;
 
 		static POBR::Blob createBlobFromFew(const std::vector<Blob>& blobs);
 	private:

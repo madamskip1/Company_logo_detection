@@ -10,8 +10,9 @@ namespace POBR
 	{
 	public:
 		void addBlob(const Blob& blob);
-		void filterBlobsBySize(const std::size_t& size);
-		void filterBlobsByHuMoments(const POBR::HuMoments& huMin, const POBR::HuMoments& huMax);
+		void filterBySize(const std::size_t& minSize, const std::size_t& maxSize);
+		void filterByHuMoments(const POBR::HuMoments& huMin, const POBR::HuMoments& huMax);
+		void filterByEdgeRatio(const double minRatio, const double maxRatio);
 
 		void draw(cv::Mat& mat) const;
 		const std::vector<POBR::Blob>& getBlobs() const;

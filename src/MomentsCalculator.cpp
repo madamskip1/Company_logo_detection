@@ -13,24 +13,36 @@
 void calcMomentsRange(std::string imageName)
 {
 	auto img = cv::imread(imageName, cv::IMREAD_GRAYSCALE);
-	auto morphed = POBR::dilate(img, 1);
-	auto blobs = POBR::detectBlobs(morphed);
+	auto imgCopy = img.clone();
+	auto rows = img.rows;
+	auto cols = img.cols;
+	auto blobs = POBR::detectBlobs(imgCopy);
+	blobs.filterBySize(20, 10000000);
 	auto blobsVector = blobs.getBlobs();
-
-	blobs.draw(img);
-
-	cv::Mat resizedImg;
-
-	cv::resize(img, resizedImg, cv::Size{ 1920, 1080 });
-	cv::imshow("test2", resizedImg);
 
 	auto hu_values = std::vector<std::vector<double>>(10, std::vector<double>{});
 	auto momentsCounter = std::size_t{ 0 };
 
 	std::for_each(hu_values.begin(), hu_values.end(), [&blobsVector](auto& v) { v.reserve(blobsVector.size()); });
 
+	auto blobID{ 0 };
+
 	for (const auto& blob : blobsVector)
 	{
+		auto blobCorners = blob.getCorners();
+		auto startRow = std::clamp(blobCorners.first.y - 1, 0, rows);
+		auto endRow = std::clamp(blobCorners.second.y + 1, 0, rows);
+		auto startCol = std::clamp(blobCorners.first.x - 1, 0, cols);
+		auto endCol = std::clamp(blobCorners.second.x + 1, 0, cols);
+
+		cv::Mat cropped = img(cv::Range(startRow, endRow), cv::Range(startCol, endCol));
+		cv::imwrite("img/moments_logo/blue_blobs/" + std::to_string(blobID) + ".jpg", cropped);
+
+		++blobID;
+		startRow++;
+		endRow++;
+		startCol++;
+		endCol++;
 		++momentsCounter;
 		auto huMoments = POBR::HuMoments::calcHuMoments(blob);
 		auto huMomentsValues = huMoments.getHuValues();
@@ -51,16 +63,21 @@ void calcMomentsRange(std::string imageName)
 	for (std::size_t i = 0; i < 10; ++i)
 	{
 		const auto& hu_i_values{ hu_values[i] };
-		auto& minHuValue{ minHuValues[i] };
-		auto& maxHuValue{ maxHuValues[i] };
-		auto& avgHuValue{ avgHuValues[i] };
+		auto minHuValue{ minHuValues[i] };
+		auto maxHuValue{ maxHuValues[i] };
+		auto avgHuValue{ avgHuValues[i] };
+		
 
 		for (std::size_t j = 0; j < momentsCounter; ++j)
 		{
 			minHuValue = std::min(minHuValue, hu_i_values[j]);
+			minHuValues[i] = minHuValue;
 			maxHuValue = std::max(maxHuValue, hu_i_values[j]);
+			maxHuValues[i] = maxHuValue;
 			avgHuValue += hu_i_values[j];
 		}
+
+
 		avgHuValue /= momentsCounter;
 	}
 
@@ -130,6 +147,7 @@ void writeMomentsToFile(std::vector<std::vector<double>>& hu_values)
 
 	for (std::size_t i = 0; i < momentsCounter; ++i)
 	{
+		outfile << i << ";";
 		for (std::size_t j = 0; j < 10; ++j)
 		{
 			outfile << hu_values[j][i];

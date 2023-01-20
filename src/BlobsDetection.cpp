@@ -1,6 +1,7 @@
 #include "BlobsDetection.h"
 
 #include <queue>
+#include "Blob.h"
 
 namespace POBR
 {
@@ -33,6 +34,7 @@ namespace POBR
     POBR::Blobs detectBlobs(cv::Mat inMat)
     {
         CV_Assert(inMat.channels() == 1);
+        std::cout << "--POBR::Blobs detection --- start" << std::endl;
         auto blobs = POBR::Blobs{};
 
         std::queue<cv::Point2i> pixelsToCheck;
@@ -65,7 +67,7 @@ namespace POBR
                 }
             }
         }
-
+        std::cout << "--POBR::Blobs detection --- end" << std::endl;
         return blobs;
     }
 }
